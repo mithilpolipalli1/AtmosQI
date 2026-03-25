@@ -24,7 +24,7 @@ export default function Home({ onDiscover }) {
       <nav className="fixed top-0 left-0 right-0 z-50 px-10 py-6 flex justify-between items-center backdrop-blur-md bg-[#070913]/60 border-b border-white/5">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-2xl shadow-xl shadow-blue-900/40">🌍</div>
-          <span className="text-2xl font-bold tracking-tighter cursor-pointer" onClick={() => window.scrollTo(0, 0)}>Atmos<span className="text-blue-500">QI</span></span>
+          <span className="text-2xl font-bold tracking-tighter cursor-pointer" onClick={() => window.scrollTo(0, 0)}>Atmos<span className="text-blue-500">IQ</span></span>
         </div>
         <div className="hidden md:flex items-center gap-12 text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
           <button onClick={() => scrollToSection('vision')} className="hover:text-blue-400 transition-colors">Our Vision</button>
@@ -48,7 +48,7 @@ export default function Home({ onDiscover }) {
 
         <div className="relative z-10 text-center max-w-5xl">
           <h1 className="text-8xl md:text-[10rem] font-bold tracking-tighter leading-none mb-6 drop-shadow-2xl">
-            Atmos<span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-emerald-400">QI</span>
+            Atmos<span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-emerald-400">IQ</span>
           </h1>
           <p className="text-slate-500 text-lg md:text-xl font-bold uppercase tracking-[0.6em] mb-12 opacity-80 leading-relaxed max-w-3xl mx-auto">
             Redefining <span className="text-white italic">Atmospheric Intelligence</span> For The Next Decade.
@@ -146,7 +146,7 @@ export default function Home({ onDiscover }) {
       {/* ── FOOTER ─────────────────────────────────────────────────── */}
       <footer className="py-20 border-t border-white/5 flex flex-col items-center bg-[#070913]">
         <div className="flex gap-16 text-[11px] font-bold text-slate-600 uppercase tracking-[0.5em] mb-10 select-none">
-          <span>ATMOSQI // 2026</span>
+          <span>ATMOSIQ // 2026</span>
           <span>•</span>
           <span>PRIVACY</span>
           <span>•</span>

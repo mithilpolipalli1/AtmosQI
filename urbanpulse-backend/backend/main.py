@@ -20,7 +20,7 @@ from backend.models.environmental_anomaly import EnvironmentalAnomaly  # type: i
 from backend.models.city_weather import CityWeather  # type: ignore
 from backend.models.city_air_quality import CityAirQuality  # type: ignore
 
-app = FastAPI(title="AtmosQI API")
+app = FastAPI(title="AtmosIQ API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +33,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "AtmosQI API running"}
+    return {"message": "AtmosIQ API running"}
 
 
 @app.get("/cities")

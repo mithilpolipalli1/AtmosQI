@@ -33,7 +33,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           <Globe className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-xl font-black tracking-tighter uppercase text-white leading-none">AtmosQI</h1>
+          <h1 className="text-xl font-black tracking-tighter uppercase text-white leading-none">AtmosIQ</h1>
           <p className="text-[8px] font-black text-indigo-400 uppercase tracking-[0.3em] mt-1.5 opacity-80">Metropolitan AI</p>
         </div>
       </div>
