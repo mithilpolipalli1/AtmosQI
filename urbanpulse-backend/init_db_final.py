@@ -1,14 +1,15 @@
 import os
-from sqlalchemy import create_engine, text
-from backend.database.session import Base
-from backend.models.environmental_anomaly import EnvironmentalAnomaly
+from sqlalchemy import create_engine, text  # type: ignore
+from backend.database.session import Base  # type: ignore
+from backend.models.environmental_anomaly import EnvironmentalAnomaly  # type: ignore
 # Force loading models to populate Base.metadata
-from backend.models.city_weather import CityWeather
-from backend.models.city_air_quality import CityAirQuality
+from backend.models.city_weather import CityWeather  # type: ignore
+from backend.models.city_air_quality import CityAirQuality  # type: ignore
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 
-load_dotenv(".env")
+env_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(env_path)
 db_url = os.getenv("DATABASE_URL")
 
 if not db_url:

@@ -10,10 +10,3 @@ extraPaths = [
     "./urbanpulse-backend/data_pipeline",
     "C:/Users/mithi/AppData/Local/Programs/Python/Python313/Lib/site-packages"
 ]
-
-[tool.pyre]
-search_path = [
-    "C:/Users/mithi/AppData/Local/Programs/Python/Python313/Lib/site-packages",
-    "./urbanpulse-backend",
-    "./urbanpulse-backend/backend"
-]

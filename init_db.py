@@ -1,9 +1,10 @@
 """Initialize the environmental anomalies table. Drop it if it's missing columns."""
+# Trivial edit to trigger Pyre
 import os
-from sqlalchemy import create_engine, text
-from backend.database.session import Base
-from backend.models.environmental_anomaly import EnvironmentalAnomaly
-from dotenv import load_dotenv
+from sqlalchemy import create_engine, text  # type: ignore
+from backend.database.session import Base  # type: ignore
+from backend.models.environmental_anomaly import EnvironmentalAnomaly  # type: ignore
+from dotenv import load_dotenv  # type: ignore
 
 load_dotenv("urbanpulse-backend/.env")
 db_url = os.getenv("DATABASE_URL")

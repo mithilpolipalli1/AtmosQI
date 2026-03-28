@@ -1,4 +1,4 @@
-import requests  # pyre-fixme[21]: Could not find module `requests`.
+import requests  # type: ignore
 import time
 
 cities = ["Hyderabad", "Delhi", "Mumbai", "Kolkata", "Bengaluru", "Chennai"]

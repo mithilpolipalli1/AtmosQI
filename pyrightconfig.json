@@ -1,7 +1,7 @@
 {
   "pythonVersion": "3.13",
   "pythonPlatform": "Windows",
-  "pythonPath": "C:/Users/mithi/AppData/Local/Programs/Python/Python313/python.exe",
+  "pythonPath": "C:\\Users\\mithi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
   "extraPaths": [
     "./urbanpulse-backend",
     "./urbanpulse-backend/backend",
