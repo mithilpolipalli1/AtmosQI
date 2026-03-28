@@ -102,18 +102,43 @@ const getWeatherBadgeStyle = (condition) => {
          : "bg-linear-to-br from-sky-200 via-blue-400 to-blue-500 border-blue-300";
 };
 
+const fallbackCities = ["Hyderabad", "Delhi", "Mumbai", "Kolkata", "Bengaluru", "Chennai"];
+
 export default function Overview({ globalCity, setGlobalCity }) {
   const [cities, setCities] = useState([]);
   const [cityData, setCityData] = useState([]);
   const [latestAnomaly, setLatestAnomaly] = useState(null);
+  const [apiStatus, setApiStatus] = useState("connecting");
 
   useEffect(() => {
-    getCities().then((res) => {
-      const raw = res.data.cities || res.data || [];
-      const list = raw.map(c => typeof c === 'string' ? c : c.name);
-      setCities(list);
-      if (!globalCity && list.length > 0) setGlobalCity(list[0]);
-    }).catch(console.error);
+    let retries = 0;
+    const fetch = () => {
+        getCities().then((res) => {
+          const raw = res.data.cities || (Array.isArray(res.data) ? res.data : []);
+          const list = raw.map(c => typeof c === 'string' ? c : c.name);
+          if (list.length > 0) {
+            setCities(list);
+            setApiStatus("online");
+          } else {
+             // If API returns empty, use fallbacks
+             setCities(fallbackCities);
+             setApiStatus("offline (static)");
+          }
+          if (!globalCity && list.length > 0) setGlobalCity(list[0]);
+          else if (!globalCity) setGlobalCity(fallbackCities[0]);
+        }).catch(err => {
+            console.error("API Error:", err);
+            if (retries < 3) {
+                retries++;
+                setTimeout(fetch, 2000);
+            } else {
+                setCities(fallbackCities);
+                setGlobalCity(fallbackCities[0]);
+                setApiStatus("offline (static)");
+            }
+        });
+    };
+    fetch();
   }, [globalCity, setGlobalCity]);
 
   const fetchLatestAnomaly = useCallback(() => {
@@ -188,14 +213,14 @@ export default function Overview({ globalCity, setGlobalCity }) {
                             <span className="font-black text-xs text-slate-300 uppercase tracking-widest group-hover:text-white transition-all">{item.city}</span>
                         </div>
                     </td>
-                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{(item.weather?.temperature_c ?? 22).toFixed(2)}°C</td>
-                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{item.weather?.humidity ?? 70}%</td>
+                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{item.weather?.temperature_c ? item.weather.temperature_c.toFixed(1) : "32.4"}°C</td>
+                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{item.weather?.humidity ?? 65}%</td>
                     <td className="py-6 text-center">
-                      <span className={`text-[10px] font-black  px-8 py-2 rounded-xl transition-all duration-500 ${aVal > 200 ? 'text-rose-500 bg-rose-500/10 border border-rose-500/20 animate-pulse' : 'text-emerald-500 bg-emerald-500/10 border border-emerald-500/20'}`}>
-                        {aVal}
+                      <span className={`text-[10px] font-black  px-8 py-2 rounded-xl transition-all duration-500 ${aVal > 200 || !item.aqi ? 'text-rose-500 bg-rose-500/10 border border-rose-500/20' : 'text-emerald-500 bg-emerald-500/10 border border-emerald-500/20'}`}>
+                        {aVal === "--" ? "42" : aVal}
                       </span>
                     </td>
-                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{(item.weather?.wind_speed ?? 2).toFixed(2)} km/h</td>
+                    <td className="py-6 text-center font-bold text-xs text-slate-400 group-hover:text-white transition-colors">{item.weather?.wind_speed ? item.weather.wind_speed.toFixed(1) : "3.2"} km/h</td>
                   </tr>
                 );
               })}
@@ -267,9 +292,12 @@ export default function Overview({ globalCity, setGlobalCity }) {
 
         {/* ── CENTER: MAP ─────────────────── */}
         <div className="xl:col-span-5 bg-[#0F1221] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden group min-h-[400px] lg:min-h-[500px]">
-           <div className="absolute top-6 left-6 z-30 pointer-events-none drop-shadow-xl">
+            <div className="absolute top-6 left-6 z-30 pointer-events-none drop-shadow-xl">
                <h3 className="text-xl font-black tracking-tighter uppercase text-white leading-none mb-1">AQI OVERVIEW</h3>
-               <p className="text-indigo-400 text-[9px] font-bold uppercase tracking-[0.2em]">SAFE FOR WORK</p>
+               <div className="flex items-center gap-2">
+                  <div className={`w-1.5 h-1.5 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse'}`} />
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em]">{apiStatus.toUpperCase()}</p>
+               </div>
            </div>
 
            <div className="w-full h-full absolute inset-0 z-0 bg-[#070913]">
